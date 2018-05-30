@@ -1,0 +1,62 @@
+<div class="container" >
+	
+	<div class="card">
+		<div class="card-header bg-success text-white"> Utilisateur : {{lastName}}  {{firstName}} </div>
+		<div class="card-body" *ngIf = "access == 0"> 
+			<div class="container">
+				<p></p>
+                <form (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="usr">e-mail:</label>
+                        <input type="text" class="form-control" id="usr" name="username" required [(ngModel)]="mail">
+                        <button type="submit" class="btn btn-success" style="margin-top: 20px;">Submit</button>
+                    </div>
+                </form>
+           </div>
+           <div *ngIf="messageError"><p>{{messageError}}<p></div>
+
+		</div>
+		<div *ngIf = "access == 1" class="card-body">
+            <h3> Liste des tàche :</h3>   
+           <table class="table table-success.table-bordered" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+      	                <th class="col-md-1">Etat</th>
+      	                <th class="col-md-1">Deadline</th>
+                        <th class="col-md-2">Titre</th>
+                        <th class="col-md-7">Description</th>
+                        <th class="col-md-1"></th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let task of taskList; let i = index">
+                    	<td>
+                    		<div style="margin-left: 30px;">
+                    			<input type="checkbox" class="form-check-input" [(ngModel)]="task.done" (change) = "updateTable(i)" value="" >                 		  
+                    	    </div>
+                    	</td>
+                        <td>{{task.deadLine}}</td>
+                        <td>{{task.titre}}</td>
+                        <td>{{task.desc}}</td>
+                        <td>
+                            <div class="dropup" style="text-align: right;" *ngIf = "hideButtonUp(i)">
+                            	<button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="padding: 5px; " (click) = "deplaceUp(i)"></button>
+                            </div> 
+                            <div class="dropdown" style="text-align: right;" *ngIf = "hideButtonDown(i)">
+                            	<button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown " style="padding: 5px;" (click) = "deplaceDown(i)"></button>
+                            </div>
+                            
+                        </tr>
+      
+                </tbody>
+
+            </table>
+            
+        </div>
+	</div>
+
+
+</div>
+
